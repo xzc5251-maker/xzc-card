@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>谢志成 · 角色面板</title>
+<style>
+:root{--bg:#EDE8E0;--card:#F6F2EC;--ink:#3A3733;--mut:#8C867D;--line:#D9D2C6;--sage:#8E9C8C;--rose:#BA9D95;--slate:#7F8E9B;--sand:#C7B69B;--skin:#DCC3AC;--hair:#4B4642;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1D1C1A;--card:#282623;--ink:#E7E2D9;--mut:#9A948A;--line:#3A3733;--sage:#8DA08D;--rose:#B59A92;--slate:#8A9AA7;--sand:#BBA98E;--skin:#C9AE98;--hair:#2F2B28}}
+:root[data-theme="dark"]{--bg:#1D1C1A;--card:#282623;--ink:#E7E2D9;--mut:#9A948A;--line:#3A3733;--sage:#8DA08D;--rose:#B59A92;--slate:#8A9AA7;--sand:#BBA98E;--skin:#C9AE98;--hair:#2F2B28}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.75 "PingFang SC","Noto Sans SC","Microsoft YaHei",sans-serif}
+.w{max-width:960px;margin:0 auto;padding:28px 18px 64px}
+.hero{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:22px;align-items:center}
+@media(max-width:640px){.hero{grid-template-columns:1fr}}
+.stage{perspective:900px}
+.pc{position:relative;height:330px;border-radius:22px;background:linear-gradient(160deg,var(--card),var(--line));border:1px solid var(--line);transform-style:preserve-3d;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .15s ease-out;box-shadow:0 18px 40px -22px rgba(0,0,0,.35);overflow:visible}
+.pc svg{position:absolute;inset:0;width:100%;height:100%}
+.aura{transform:translateZ(10px)}.fig{transform:translateZ(46px)}
+.chip{position:absolute;font-size:12px;padding:3px 11px;border-radius:20px;background:var(--card);border:1px solid var(--line);color:var(--mut);transform:translateZ(86px);animation:fl 5s ease-in-out infinite}
+.chip:nth-of-type(2){animation-delay:-1.6s}.chip:nth-of-type(3){animation-delay:-3.2s}
+@keyframes fl{50%{translate:0 -7px}}
+@media(prefers-reduced-motion:reduce){.chip{animation:none}.pc{transition:none}}
+.cls{font-size:12px;letter-spacing:.26em;color:var(--mut)}
+h1{font-size:32px;margin:4px 0 6px;font-weight:600}
+.sub{color:var(--mut);margin:0 0 14px;max-width:520px}
+.lv{display:flex;gap:10px;align-items:center;font-size:13px;color:var(--mut);margin-bottom:14px}
+.lv i{flex:1;height:6px;border-radius:3px;background:var(--line);overflow:hidden;max-width:260px}.lv u{display:block;height:100%;width:78%;background:var(--sage)}
+.buffs{display:flex;flex-wrap:wrap;gap:8px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:30px 0 14px}
+.tabs button,.k{font:inherit;color:inherit;cursor:pointer}
+.tabs button{border:1px solid var(--line);background:transparent;padding:6px 16px;border-radius:20px;color:var(--mut)}
+.tabs button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.k{text-align:left;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;transition:transform .15s,border-color .15s}
+.k:hover{transform:translateY(-3px);border-color:var(--sand)}.k.on{border-color:var(--ink)}
+.k b{display:block;font-weight:600}.k span{font-size:12px;color:var(--mut)}.k em{float:right;font-style:normal;font-size:13px;color:var(--sage)}
+.k.bad em{color:var(--rose)}.k.lock{opacity:.7;border-style:dashed}
+.dp{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;min-height:130px}
+.dp h3{margin:0 0 4px;font-size:18px}.dp .t{font-size:12px;color:var(--mut);letter-spacing:.14em}
+.dp p{margin:10px 0 0}.dp .up{color:var(--mut);border-left:2px solid var(--sand);padding-left:12px;font-size:14px}
+.st{display:flex;gap:10px;align-items:flex-start;margin:8px 0;cursor:pointer;font-size:14px}.st input{margin-top:5px;accent-color:var(--sage)}
+.pg{height:6px;border-radius:3px;background:var(--line);margin:12px 0 4px;overflow:hidden}.pg u{display:block;height:100%;background:var(--sage);transition:width .3s}
+.note{font-size:12.5px;color:var(--mut);margin-top:30px}
+</style>
+</head>
+<body><div class="w">
+<div class="hero">
+<div class="stage" id="stage"><div class="pc" id="pc">
+<svg viewBox="0 0 240 330" aria-label="角色形象">
+<g class="aura"><circle cx="120" cy="150" r="96" fill="var(--sage)" opacity=".22"/><circle cx="120" cy="150" r="70" fill="var(--sand)" opacity=".25"/></g>
+<g class="fig">
+<path d="M34 330c4-62 34-88 86-88s82 26 86 88z" fill="var(--slate)"/>
+<path d="M96 242l24 30 24-30-12-10h-24z" fill="var(--card)"/>
+<rect x="105" y="206" width="30" height="40" rx="12" fill="var(--skin)"/>
+<ellipse cx="120" cy="156" rx="46" ry="54" fill="var(--skin)"/>
+<path d="M72 150c-4-46 20-66 50-66s54 18 48 66c-8-22-20-32-48-32s-42 12-50 32z" fill="var(--hair)"/>
+<path d="M92 160q6-5 12 0M136 160q6-5 12 0" stroke="var(--hair)" stroke-width="3" fill="none" stroke-linecap="round"/>
+<path d="M108 188q12 9 24 0" stroke="var(--hair)" stroke-width="3" fill="none" stroke-linecap="round"/>
+</g></svg>
+<span class="chip" style="left:-10px;top:56px">直播</span><span class="chip" style="right:-8px;top:110px">短视频</span><span class="chip" style="left:6px;bottom:52px">商业化</span>
+</div></div>
+<div>
+<div class="cls">CHARACTER · 角色面板</div>
+<h1>谢志成</h1>
+<p class="sub">称号：增长操盘手 · 从0到1开拓者。擅长在没人走过的地方先走一遍，靠信任与学习起盘；目前处于“探索期”，正在寻找下一张地图。</p>
+<div class="lv"><span>Lv.9 · 九年实战</span><i><u></u></i><span>下一级：新业务负责人</span></div>
+<div class="buffs" id="buffs"></div>
+</div></div>
+<div class="tabs" id="tabs"></div>
+<div class="grid" id="grid"></div>
+<div class="dp" id="dp"><div class="t">提示</div><p>点击上方任意卡片，查看详情、证据和升级方向。</p></div>
+<p class="note">说明：本页依据你自述的经历整理，数值为主观评估，不是心理测评。2025年的早期认知仅作对照。任务勾选只保存在当前浏览器。</p>
+</div>
+<script>
+var A=function(n,b,s,d,u,x){return {n:n,b:b,s:s,d:d,u:u,x:x}};
+var D={
+"属性":[
+A("开拓力","9.0","从0到1","淘宝直播从零搭设备、招人；抖音账号涨到三四十万粉；接手亏损直播间并扭亏；IP快闪单场6小时GMV 100万。","升级方向：把一次性打法沉淀成可复制的手册，让下一次起盘更快。"),
+A("学习力","9.0","模仿到极致再融合","先把成熟做法拆透做到极致，再加一点自己的变化。这是你从中专起步一路走到管理岗的底层引擎。","升级方向：把学习对象从同行扩展到跨行业的方法论。"),
+A("信任力","8.5","让陌生人愿意合作","回望九年，最有价值感的时刻是陌生人逐渐信任你并愿意合作。商家、平台、同行、创作者的网络都是这样建起来的。","升级方向：整理关系清单，主动维护最关键的二十个人。"),
+A("经营力","8.0","品类与渠道判断","扭亏时转向高客单外套品类，请外部投放人员带团队；KOC渠道试验也体现了判断与敢试。","升级方向：补上利润与现金流视角，从“做起来”走到“做赚钱”。"),
+A("抗压力","7.0","爆发型强，条件型稳","任务型压力（目标、不确定、从0到1）你扛得很好；意义缺失、权限被削的压力消耗你最快。","升级方向：留一块不依赖环境、可控且有意义的小项目。"),
+A("深耕力","5.0","精细化与长期维护","自述起盘后较少深挖，长期琐碎的工作容易先出现情绪。","升级方向：配一位擅长精细运营的搭档，或固定每周的深耕时段。"),
+A("计算力","4.0","口算与做表","口算、同比环比算得慢，做财务表吃力；但看数据含义、判断趋势没有问题。","升级方向：不补短板，只定义“要看哪几列”，让工具或下属来算。")],
+"技能":[
+A("网感","天赋","苗头就能判断爆不爆","自述看到一个东西起势，就能判断它会不会火、什么内容有流量。这是长期泡在抖音里练出来的直觉。","升级：把直觉拆成可复述的判断标准，变成团队能用的选题清单。"),
+A("模仿整合","天赋","拆透再融合","对成熟做法先模仿到极致，再整合出自己的版本。","升级：把每次拆解沉淀成模板库。"),
+A("建立信任","天赋","陌生人变伙伴","愿意以助理位置换取近距离学习，也能让对方放心合作。","升级：有意识地经营长期关系，而不只是项目关系。"),
+A("从0到1","主动","搭起一条新业务","淘宝直播、抖音账号、IP快闪，都是从无到有。","升级：写下你的起盘清单：设备、人、品类、节奏。"),
+A("亏损扭转","主动","接手并翻盘","2022年接手亏损直播团队，转高客单外套并引入外部指导，当年10月扭亏。","升级：总结成“扭亏五步”，面试时可直接讲。"),
+A("资源调动","主动","出面就能办成","自述财务预算、借库存这类跨部门事，只要你出面基本能办成。","升级：把靠个人关系办成，转成可复用的协作机制。"),
+A("组局带动","主动","气氛与组织","同事、朋友、家人里常是被叫去吃饭的人，擅长恰到好处地调节氛围。","升级：把这份带动力用在团队文化与招聘面试上。"),
+A("数据复盘","未解锁","宏大叙事复盘","半年、一年的整体复盘是你的弱项。","解锁办法：每周三行记录，月底再串成一页。"),
+A("长期规划","未解锁","抬头看路","市场大盘、品类布局、半年作战计划让你不适应。","解锁办法：每月固定一小时只看大盘与竞品。"),
+A("精细化深耕","未解锁","把成功做深","","解锁办法：找一位深耕型搭档，互补而不是自己硬补。")],
+"任务":[
+A("主线：找到下一站","进行中","新业务增长 / 商业化负责人","目标：抖音电商、杭州。你要的是“新业务”，而不是把起盘再做一遍。","这些是我给你的建议任务，可自行改。",["整理3个可讲的案例：扭亏、IP快闪、KOC试验","列出10家目标公司或业务线","准备四个面试提问：权限、利润分配、业务归属、共事的人","约3位行业朋友聊一次，请他们介绍岗位"]),
+A("支线：内部缓冲","可开始","不依赖环境的小项目","选一个自己可控且有意义的事做，例如AI自动化、视频拆解、个人品牌。环境不理想时，状态不至于完全被外部决定。","",["选定一个小项目，并写下一个月目标","每周留一个固定时段只做这件事","月底做一页复盘"]),
+A("日常：三行记录","可开始","补强大叙事复盘","每天只写三行：最爽的一件事、学到的一个逻辑、明天最重要的一件事。","",["连续记录7天","周末把7天串成一页","月底汇总成月度复盘"]),
+A("隐藏：想试的事","未触发","兴趣与新方向","你提到过想开一家酸面包店，也做过日本旅行短片，还在研究X账号变现。这些可能是下一张地图的入口。","",["写下最想试的一个，并给它一个最小验证动作","限定时间与预算，试完再决定去留"])],
+"装备":[
+A("称号","荣誉","2018 商家团队奖","淘宝直播从0到1搭建后获得的年度商家团队奖。","这是你履历里最早的硬证据。"),
+A("称号","战绩","渠道GMV 2亿","2025年渠道层面成绩；单月最高GMV 3000万。","面试时需要说清个人贡献比例。"),
+A("称号","战绩","账号 三四十万粉","2019年起做抖音账号，单条最高播放2000万+，单日导流淘宝访客10万+。","可作为内容能力的证明。"),
+A("设备","主力","Mac + Codex桌面端","主力电脑环境，已实践手机远程控制电脑。","适合继续做自动化与AI工作流。"),
+A("设备","随身","iPhone 与 Android","同一账号多设备使用。","手机端适合随时记录与查看。"),
+A("外脑","工具","飞书 / T7硬盘 / 简历库","飞书推广经验，素材放T7，简历已有可复用资料库。","把“外脑”做成系统，正是你补长期维护的办法。")],
+"弱点":[
+A("拖延回避","Debuff","没安全感的事先躲","自述遇到困难或没安全感的事容易拖延、回避，行动前会反复推演失败结局。","解除：把事拆成十分钟的第一步，只承诺开头。"),
+A("意义缺失","Debuff","环境消耗","最让你难受的不是事多，而是环境和人让你无法沉浸、找不到努力的意义。","解除：入职前问清权限、利润分配、业务归属和共事的人。"),
+A("习惯易断","Debuff","起步易中断难","记账坚持约300天，断几天后就放弃。","解除：允许每月有3次空白卡，断了不算失败。"),
+A("按字面当真","Debuff","默认信任","自述容易把别人的玩笑或话当真。","解除：重要信息多问一句“你是认真的吗”。")],
+"剧情":[
+A("序章 2017","入职","从客服起步","19岁起从客服售中组长做起，之后做淘系运营助理。","地基：贴近用户、懂细节。"),
+A("第一章 2018","淘宝直播","从0到1","自己调研设备、搭灯光、招兼职主播，获当年商家团队奖。","你第一次做开拓者。"),
+A("第二章 2019","抖音账号","研究出一条路","测试多种内容形式，账号涨到三四十万粉并向淘宝导流。","你开始了解内容与流量。"),
+A("第三章 2022","直播扭亏","接手并翻盘","接手亏损团队，转高客单外套，10月扭亏。","你的高光战役。"),
+A("第四章 2025","规模化","渠道GMV 2亿","IP快闪、KOC试验、飞书推广并行，业务也被调整。","能力与权限开始错位。"),
+A("现章 2026","探索期","寻找下一张地图","2026年9月离开，正在选下一站。","你的选择：更大的权限，更清晰的意义。")]
+};
+var BUF=[["权限","能决定与负责。缺这一块，你的沉浸感会明显下降。"],["回报","价值被看见并被回报。"],["共事的人","你看重和值得学习的人共事。"],["意义","知道为什么要做，你才能持续投入。"]];
+var cur="属性",sel=-1,S={};try{S=JSON.parse(localStorage.getItem("q")||"{}")}catch(e){}
+function save(){try{localStorage.setItem("q",JSON.stringify(S))}catch(e){}}
+function tabs(){var h="";Object.keys(D).forEach(function(k){h+='<button class="'+(k==cur?"on":"")+'" data-t="'+k+'">'+k+"</button>"});document.getElementById("tabs").innerHTML=h}
+function grid(){var h="";D[cur].forEach(function(x,i){var c="k"+(i==sel?" on":"")+(x.b=="Debuff"?" bad":"")+(x.b=="未解锁"?" lock":"");h+='<button class="'+c+'" data-i="'+i+'"><em>'+x.b+"</em><b>"+x.n+"</b><span>"+x.s+"</span></button>"});document.getElementById("grid").innerHTML=h}
+function show(i){sel=i;grid();var x=D[cur][i],h='<div class="t">'+x.b+"</div><h3>"+x.n+"</h3><p>"+x.d+"</p>";
+if(x.x){var k=cur+i,a=S[k]||[],n=0;h+='<div class="pg"><u id="pb"></u></div><div id="pt" style="font-size:12px;color:var(--mut)"></div>';x.x.forEach(function(s,j){h+='<label class="st"><input type="checkbox" data-k="'+k+'" data-j="'+j+'"'+(a[j]?" checked":"")+"><span>"+s+"</span></label>"})}
+if(x.u)h+='<p class="up">'+x.u+"</p>";document.getElementById("dp").innerHTML=h;if(x.x)prog(x)}
+function prog(x){var k=cur+sel,a=S[k]||[],n=0;x.x.forEach(function(s,j){if(a[j])n++});document.getElementById("pb").style.width=(100*n/x.x.length)+"%";document.getElementById("pt").textContent="完成 "+n+" / "+x.x.length}
+document.getElementById("tabs").onclick=function(e){var t=e.target.getAttribute("data-t");if(t){cur=t;sel=-1;tabs();grid();document.getElementById("dp").innerHTML='<div class="t">提示</div><p>点击上方任意卡片，查看详情、证据和升级方向。</p>'}};
+document.getElementById("grid").onclick=function(e){var b=e.target.closest(".k");if(b)show(+b.getAttribute("data-i"))};
+document.getElementById("dp").onchange=function(e){var t=e.target;if(t.type!="checkbox")return;var k=t.getAttribute("data-k"),j=+t.getAttribute("data-j");S[k]=S[k]||[];S[k][j]=t.checked;save();prog(D[cur][sel])};
+var bh="";BUF.forEach(function(b){bh+='<button class="k" style="padding:5px 14px;border-radius:20px" data-b="'+b[0]+'">'+b[0]+"</button>"});var bf=document.getElementById("buffs");bf.innerHTML=bh;
+bf.onclick=function(e){var n=e.target.getAttribute("data-b");if(!n)return;BUF.forEach(function(b){if(b[0]==n)document.getElementById("dp").innerHTML='<div class="t">沉浸四要素</div><h3>'+b[0]+"</h3><p>"+b[1]+'</p><p class="up">这四项缺一块，你的状态就容易下滑，选下一站时可当作检查清单。</p>'})};
+var pc=document.getElementById("pc"),st=document.getElementById("stage");
+st.addEventListener("pointermove",function(e){var r=st.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;pc.style.setProperty("--ry",(x*16)+"deg");pc.style.setProperty("--rx",(-y*12)+"deg")});
+st.addEventListener("pointerleave",function(){pc.style.setProperty("--ry","0deg");pc.style.setProperty("--rx","0deg")});
+tabs();grid();
+</script></body></html>
